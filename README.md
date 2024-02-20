@@ -2,7 +2,7 @@
 
 WebBuilder 2.0 is a WordPress clone built using Next.js, a React framework for building server-side rendered applications. This repository serves as the central location for the codebase of WebBuilder 2.0.
 
-#### Features
+## Features
 
 Next.js Framework: Utilizes the Next.js framework for server-side rendering, providing better performance and SEO optimization compared to traditional client-side rendering.
 
@@ -15,7 +15,7 @@ Customization: Provides extensive customization options for themes, plugins, and
 
 **SEO-Friendly**: Incorporates SEO best practices to enhance the visibility and ranking of websites on search engine results pages.
 
-#### Installation
+## Installation
 
 To run WebBuilder 2.0 locally, follow these steps:
 
@@ -45,7 +45,7 @@ bun dev
 
 5. Open your web browser and navigate to http://localhost:3000 to access WebBuilder 2.0.
 
-#### Usage
+## Usage
 
 Once WebBuilder 2.0 is up and running, you can begin creating and managing your website through the intuitive user interface. Here are some common tasks:
 
@@ -63,11 +63,11 @@ Make your modifications and commit them with descriptive messages.
 Push your branch to your fork and submit a pull request.
 Please ensure your code adheres to the coding standards and guidelines established in the repository.
 
-#### License
+## License
 
 This project is licensed under the MIT License.
 
-#### Support
+## Support
 
 If you encounter any issues or have questions about WebBuilder 2.0, feel free to open an issue on GitHub. We're here to help!
 
