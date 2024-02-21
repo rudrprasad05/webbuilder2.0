@@ -35,18 +35,22 @@ import {
 } from "@/components/ui/select";
 import { useEditor } from "@/provider/editor/editor-provider";
 import { Slider } from "@/components/ui/slider";
+import Image from "next/image";
+import CustomImageMediaFile from "./custom/CustomImageMediaFile";
+import CustomLinkSettings from "./custom/CustomLinkSettings";
 
 type Props = {};
 
 const SettingsTab = (props: Props) => {
   const { state, dispatch } = useEditor();
-
   const handleOnChanges = (e: any) => {
     const styleSettings = e.target.id;
     let value = e.target.value;
     const styleObject = {
       [styleSettings]: value,
     };
+
+    console.log(styleObject);
 
     dispatch({
       type: "UPDATE_ELEMENT",
@@ -61,6 +65,13 @@ const SettingsTab = (props: Props) => {
       },
     });
   };
+  // console.log(
+  //   typeof (typeof state.editor.selectedElement.styles?.opacity === "number"
+  //     ? state.editor.selectedElement.styles?.opacity
+  //     : parseFloat(
+  //         (state.editor.selectedElement.styles?.opacity || "0").replace("%", "")
+  //       ) || 100)
+  // );
 
   const handleChangeCustomValues = (e: any) => {
     const settingProperty = e.target.id;
@@ -89,23 +100,25 @@ const SettingsTab = (props: Props) => {
       className="w-full"
       defaultValue={["Typography", "Dimensions", "Decorations", "Flexbox"]}
     >
+      {/* custom */}
       <AccordionItem value="Custom" className="px-6 py-0  ">
         <AccordionTrigger className="!no-underline">Custom</AccordionTrigger>
         <AccordionContent>
           {state.editor.selectedElement.type === "link" &&
             !Array.isArray(state.editor.selectedElement.content) && (
-              <div className="flex flex-col gap-2">
-                <p className="text-muted-foreground">Link Path</p>
-                <Input
-                  id="href"
-                  placeholder="https:domain.example.com/pathname"
-                  onChange={handleChangeCustomValues}
-                  value={state.editor.selectedElement.content.href}
-                />
-              </div>
+              <CustomLinkSettings />
+            )}
+        </AccordionContent>
+
+        <AccordionContent>
+          {state.editor.selectedElement.type === "image" &&
+            !Array.isArray(state.editor.selectedElement.content) && (
+              <CustomImageMediaFile />
             )}
         </AccordionContent>
       </AccordionItem>
+
+      {/* Typography */}
       <AccordionItem value="Typography" className="px-6 py-0  border-y-[1px]">
         <AccordionTrigger className="!no-underline">
           Typography
@@ -206,6 +219,8 @@ const SettingsTab = (props: Props) => {
           </div>
         </AccordionContent>
       </AccordionItem>
+
+      {/* Dimensions */}
       <AccordionItem value="Dimensions" className=" px-6 py-0 ">
         <AccordionTrigger className="!no-underline">
           Dimensions
@@ -327,11 +342,14 @@ const SettingsTab = (props: Props) => {
           </div>
         </AccordionContent>
       </AccordionItem>
+
+      {/* Decorations */}
       <AccordionItem value="Decorations" className="px-6 py-0 ">
         <AccordionTrigger className="!no-underline">
           Decorations
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4">
+          {/* opacity */}
           <div>
             <Label className="text-muted-foreground">Opacity</Label>
             <div className="flex items-center justify-end">
@@ -356,6 +374,15 @@ const SettingsTab = (props: Props) => {
                   },
                 });
               }}
+              value={[
+                typeof state.editor.selectedElement.styles?.opacity === "number"
+                  ? state.editor.selectedElement.styles?.opacity
+                  : parseFloat(
+                      (
+                        state.editor.selectedElement.styles?.opacity || "0"
+                      ).replace("%", "")
+                    ) || 100,
+              ]}
               defaultValue={[
                 typeof state.editor.selectedElement.styles?.opacity === "number"
                   ? state.editor.selectedElement.styles?.opacity
@@ -363,12 +390,14 @@ const SettingsTab = (props: Props) => {
                       (
                         state.editor.selectedElement.styles?.opacity || "0"
                       ).replace("%", "")
-                    ) || 0,
+                    ) || 100,
               ]}
               max={100}
               step={1}
             />
           </div>
+
+          {/* border Radius */}
           <div>
             <Label className="text-muted-foreground">Border Radius</Label>
             <div className="flex items-center justify-end">
@@ -407,22 +436,75 @@ const SettingsTab = (props: Props) => {
               step={1}
             />
           </div>
+
+          <div className="flex gap-4">
+            <div>
+              <Label className="text-muted-foreground">Border</Label>
+              <Select
+                onValueChange={(e) =>
+                  handleOnChanges({
+                    target: {
+                      id: "border",
+                      value: e,
+                    },
+                  })
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Border Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Types</SelectLabel>
+                    <SelectItem value="1px dotted #fff !">dotted</SelectItem>
+                    <SelectItem value="1px dashed #fff !">dashed</SelectItem>
+                    <SelectItem value="1px solid #000 !">solid</SelectItem>
+                    <SelectItem value="double">double</SelectItem>
+                    <SelectItem value="none">none</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-muted-foreground">Size</Label>
+              <Input
+                placeholder="px"
+                id="fontSize"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.fontSize}
+              />
+            </div>
+          </div>
           <div className="flex flex-col gap-2">
             <Label className="text-muted-foreground">Background Color</Label>
             <div className="flex  border-[1px] rounded-md overflow-clip">
-              <div
-                className="w-12 "
-                style={{
-                  backgroundColor:
-                    state.editor.selectedElement.styles.backgroundColor,
-                }}
-              />
+              {state.editor.selectedElement.styles.backgroundColor !=
+              undefined ? (
+                <div
+                  className="w-12 "
+                  style={{
+                    backgroundColor:
+                      state.editor.selectedElement.styles.backgroundColor,
+                  }}
+                />
+              ) : (
+                <div className="w-12 bg-black">
+                  <Image
+                    alt="red slash"
+                    width={48}
+                    height={48}
+                    src={"/red-slash-no-color.png"}
+                  />
+                </div>
+              )}
               <Input
-                placeholder="#HFI245"
+                placeholder="hex, rgb, or word (white, black)"
                 className="!border-y-0 rounded-none !border-r-0 mr-2"
                 id="backgroundColor"
                 onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.backgroundColor}
+                value={
+                  state.editor.selectedElement.styles.backgroundColor || ""
+                }
               />
             </div>
           </div>
@@ -482,6 +564,8 @@ const SettingsTab = (props: Props) => {
           </div>
         </AccordionContent>
       </AccordionItem>
+
+      {/* flex */}
       <AccordionItem value="Flexbox" className="px-6 py-0  ">
         <AccordionTrigger className="!no-underline">Flexbox</AccordionTrigger>
         <AccordionContent>
@@ -560,6 +644,7 @@ const SettingsTab = (props: Props) => {
           <div className="flex items-center gap-2">
             <Input
               className="h-4 w-4"
+              checked={state.editor.selectedElement.styles.display == "flex"}
               placeholder="px"
               type="checkbox"
               id="display"
@@ -575,12 +660,12 @@ const SettingsTab = (props: Props) => {
             <Label className="text-muted-foreground">Flex</Label>
           </div>
           <div>
-            <Label className="text-muted-foreground"> Direction</Label>
+            <Label className="text-muted-foreground"> Gap</Label>
             <Input
               placeholder="px"
-              id="flexDirection"
+              id="gap"
               onChange={handleOnChanges}
-              value={state.editor.selectedElement.styles.flexDirection}
+              value={state.editor.selectedElement.styles.gap}
             />
           </div>
         </AccordionContent>

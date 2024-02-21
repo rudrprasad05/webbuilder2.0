@@ -14,7 +14,7 @@ async function uploadFileToS3(file: any, fileName: string) {
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: `alibaba/${fileName}`,
+    Key: `wordpress/${fileName}`,
     Body: fileBuffer,
     ContentType: "image/jpg",
   };

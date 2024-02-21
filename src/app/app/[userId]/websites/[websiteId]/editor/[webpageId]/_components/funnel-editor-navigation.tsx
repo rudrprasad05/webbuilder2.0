@@ -1,5 +1,5 @@
 "use client";
-import { UpsertWebPage } from "@/actions/websites";
+import { PublishWebpage, UpsertWebPage } from "@/actions/websites";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -103,11 +103,7 @@ const FunnelEditorNavigation = ({
         },
         funnelId
       );
-      // await saveActivityLogsNotification({
-      //   agencyId: undefined,
-      //   description: `Updated a funnel page | ${response?.name}`,
-      //   subaccountId: subaccountId,
-      // });
+
       toast.success("Success");
       setLoadingSave(false);
     } catch (error) {
@@ -122,12 +118,12 @@ const FunnelEditorNavigation = ({
     <TooltipProvider>
       <nav
         className={clsx(
-          "border-b-[1px] flex items-center justify-between p-6 gap-2 transition-all",
+          "border-b-[1px] flex items-center justify-between p-4 gap-2 transition-all",
           { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode }
         )}
       >
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
-          <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
+          <Link href={`/app/${subaccountId}/websites/${funnelId}`}>
             <ArrowLeftCircle />
           </Link>
           <div className="flex flex-col w-full ">
@@ -228,7 +224,15 @@ const FunnelEditorNavigation = ({
           <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row items-center gap-4">
               Draft
-              <Switch disabled defaultChecked={true} />
+              <Switch
+                onClick={async () =>
+                  await PublishWebpage(
+                    funnelPageDetails.id,
+                    !funnelPageDetails.published
+                  ).then((res) => toast.success("Status changed"))
+                }
+                defaultChecked={funnelPageDetails.published}
+              />
               Publish
             </div>
             <span className="text-muted-foreground text-sm">

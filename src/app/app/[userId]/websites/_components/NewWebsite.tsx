@@ -84,7 +84,7 @@ const NewWebsite = () => {
         .then(() => {
           setImageUpload(false);
           setImageUrl(
-            `https://mctechfiji.s3.amazonaws.com/alibaba/${
+            `https://mctechfiji.s3.amazonaws.com/wordpress/${
               "image" + salt.toString()
             }`
           );

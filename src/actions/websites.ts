@@ -30,6 +30,17 @@ export const CreateWebsite = async (data: NewWebsiteType) => {
       favicon,
     },
   });
+  const homepage = await prisma.webpages.create({
+    data: {
+      websiteId: website.id,
+      name: "Home",
+      pathName: "",
+      visits: 0,
+      order: 0,
+      previewImage: "https://mctechfiji.s3.amazonaws.com/wordpress/home.jpg",
+    },
+  });
+
   return website;
 };
 
@@ -104,4 +115,36 @@ export const UpsertWebPage = async (
 
   revalidatePath(`/subaccount/${userId}/funnels/${websiteId}`, "page");
   return response;
+};
+
+export const DeleteWebpage = async (id: string) => {
+  const res = await prisma.webpages.delete({
+    where: {
+      id,
+    },
+  });
+  return res;
+};
+
+export const GetDomainContent = async (subDomainName: string) => {
+  const response = await prisma.website.findUnique({
+    where: {
+      subDomainName,
+    },
+    include: {
+      webpages: true,
+    },
+  });
+  return response;
+};
+
+export const PublishWebpage = async (id: string, bool: boolean) => {
+  const res = await prisma.webpages.update({
+    where: { id },
+    data: {
+      published: bool,
+    },
+  });
+
+  return res;
 };

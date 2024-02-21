@@ -11,11 +11,12 @@ import {
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useEditor } from "@/provider/editor/editor-provider";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TabList from "./tabs";
 import SettingsTab from "./tabs/settings-tab";
 import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
+import AdminTab from "./tabs/admin-tab";
 
 type Props = {
   subaccountId: string;
@@ -26,7 +27,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
 
   return (
     <Sheet open={true} modal={false}>
-      <Tabs className="w-full " defaultValue="Settings">
+      <Tabs className="w-full" defaultValue="Settings">
         <SheetContent
           showX={false}
           side="right"
@@ -78,6 +79,15 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
                 </SheetDescription>
               </SheetHeader>
               <ComponentsTab />
+            </TabsContent>
+            <TabsContent value="Admin">
+              <SheetHeader className="text-left p-6 ">
+                <SheetTitle>Setting</SheetTitle>
+                <SheetDescription>
+                  Configure your webpage settings
+                </SheetDescription>
+              </SheetHeader>
+              <AdminTab />
             </TabsContent>
           </div>
         </SheetContent>

@@ -38,10 +38,7 @@ const NewWebpageForm = z.object({
     .min(2, { message: "Should have more than 2 characters" })
     .max(50, { message: "Should have less than 50 characters" }),
 
-  pathName: z
-    .string()
-    .min(2, { message: "Should have more than 2 characters" })
-    .max(50, { message: "Should have less than 50 characters" }),
+  pathName: z.string().optional(),
   previewImage: z.string().optional(),
   websiteId: z.string().optional(),
 });
@@ -82,7 +79,7 @@ const NewWebpage = ({ website }: { website: WebsiteWithPagesType }) => {
         .then(() => {
           setImageUpload(false);
           setImageUrl(
-            `https://mctechfiji.s3.amazonaws.com/alibaba/${
+            `https://mctechfiji.s3.amazonaws.com/wordpress/${
               "image" + salt.toString()
             }`
           );

@@ -21,6 +21,7 @@ type Props = {
 
 const Checkout = (props: Props) => {
   const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor();
+
   const router = useRouter();
   const [clientSecret, setClientSecret] = useState("");
   const [livePrices, setLivePrices] = useState([]);

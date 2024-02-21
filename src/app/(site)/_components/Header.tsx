@@ -44,31 +44,38 @@ const Header = () => {
       </section>
 
       <section className="pb-24 flex w-full px-40 justify-between">
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex grow flex-col items-center gap-3">
           <div>
             <HelperIcon props={{ icon: User }} />
           </div>
-          <h1 className="text-xl text-primary" className="text-xl text-primary">
-            Register
-          </h1>
+          <h1 className="text-xl text-primary">Register</h1>
+          <p className="text-center text-sm text-muted-foreground">
+            Login to your account or create a new one if youre new
+          </p>
         </div>
         <div className="h-min my-auto">
           <HelperIcon props={{ icon: MoveRight }} isArrow />
         </div>
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex grow flex-col items-center gap-3">
           <div>
             <HelperIcon props={{ icon: Pencil }} />
           </div>
           <h1 className="text-xl text-primary">Create</h1>
+          <p className="text-center text-sm text-muted-foreground">
+            Create a new website or choose one from our templates
+          </p>
         </div>
         <div className="h-min my-auto">
           <HelperIcon props={{ icon: MoveRight }} isArrow />
         </div>
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex grow flex-col items-center gap-3">
           <div>
             <HelperIcon props={{ icon: Cloud }} />
           </div>
           <h1 className="text-xl text-primary">Deploy</h1>
+          <p className="text-center text-sm text-muted-foreground">
+            Save your changes and watch it deploy to our servers
+          </p>
         </div>
       </section>
     </>

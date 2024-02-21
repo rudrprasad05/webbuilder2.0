@@ -8,7 +8,6 @@ import { GetCurrentUser } from "@/actions/user";
 
 const page = async (props: PageProps) => {
   const userId = props.params.userId;
-
   const websites = await GetUserWebsites(userId);
   //   const user = await GetCurrentUser();
   return (

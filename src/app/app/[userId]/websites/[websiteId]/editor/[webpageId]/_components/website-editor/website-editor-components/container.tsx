@@ -15,6 +15,7 @@ import {
 import { motion, useDragControls } from "framer-motion";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
+import TextComponent from "./text";
 
 type Props = { element: EditorElement };
 
@@ -22,6 +23,10 @@ const Container = ({ element }: Props) => {
   const { id, content, name, styles, type } = element;
   const { dispatch, state } = useEditor();
   const [holderStyles, setHolderStyles] = useState("");
+
+  const getId = () => {
+    return v4();
+  };
 
   const {
     attributes,
@@ -108,6 +113,85 @@ const Container = ({ element }: Props) => {
           },
         });
         break;
+      case "navbar":
+        console.log("first");
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [
+                {
+                  content: [
+                    {
+                      id: v4(),
+                      name: "Link",
+                      styles: {
+                        ...defaultStyles,
+                        fontWeight: "bold",
+                      },
+                      type: "link",
+                      content: {
+                        innerText: "Navbar",
+                        href: "#",
+                      },
+                    },
+                  ],
+                  id: v4(),
+                  name: "Container",
+                  styles: { ...defaultStyles },
+                  type: "container",
+                },
+                {
+                  content: [
+                    {
+                      id: v4(),
+                      name: "Link",
+                      styles: {
+                        ...defaultStyles,
+                        marginLeft: "10px",
+                        fontSize: "12px",
+                      },
+                      type: "link",
+                      content: {
+                        innerText: "Home",
+                        href: "#",
+                      },
+                    },
+                    {
+                      id: v4(),
+                      name: "Link",
+                      styles: { ...defaultStyles, fontSize: "12px" },
+                      type: "link",
+                      content: {
+                        innerText: "About",
+                        href: "#",
+                      },
+                    },
+                  ],
+                  id: v4(),
+                  name: "Container",
+                  styles: {
+                    ...defaultStyles,
+                    display: "flex",
+                    justifyContent: "end",
+                  },
+                  type: "container",
+                },
+              ],
+              id: v4(),
+              name: "Navbar",
+              styles: {
+                ...defaultStyles,
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#0c4a6e",
+              },
+              type: "navbar",
+            },
+          },
+        });
+        break;
       case "contactForm":
         dispatch({
           type: "ADD_ELEMENT",
@@ -149,14 +233,14 @@ const Container = ({ element }: Props) => {
                   content: [],
                   id: v4(),
                   name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
+                  styles: { ...defaultStyles, width: "100%", flexGrow: 1 },
                   type: "container",
                 },
                 {
                   content: [],
                   id: v4(),
                   name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
+                  styles: { ...defaultStyles, width: "100%", flexGrow: 1 },
                   type: "container",
                 },
               ],
@@ -164,6 +248,23 @@ const Container = ({ element }: Props) => {
               name: "Two Columns",
               styles: { ...defaultStyles, display: "flex" },
               type: "2Col",
+            },
+          },
+        });
+        break;
+      case "image":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: {
+                src: "https://mctechfiji.s3.amazonaws.com/wordpress/image1708397861478",
+              },
+              id: v4(),
+              name: "Image",
+              styles: {},
+              type: "image",
             },
           },
         });
@@ -207,8 +308,9 @@ const Container = ({ element }: Props) => {
     <div
       key={id}
       style={styles}
-      className={clsx("relative p-4 transition-all group", {
-        "my-5": !state.editor.liveMode && type !== "__body",
+      className={clsx("relative transition-all group ", {
+        // "p-4": !state.editor.liveMode || !state.editor.previewMode,
+        "mb-5 p-4": !state.editor.liveMode && type !== "__body",
         "max-w-full w-full": type === "container" || type === "2Col",
         "h-fit": type === "container",
         "h-full": type === "__body",
@@ -279,9 +381,7 @@ const Container = ({ element }: Props) => {
       >
         {Array.isArray(content) &&
           content.map((childElement) => (
-            <div>
-              <Recursive key={childElement.id} element={childElement} />
-            </div>
+            <Recursive key={childElement.id} element={childElement} />
           ))}
       </SortableContext>
 

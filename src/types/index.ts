@@ -1,3 +1,4 @@
+import { getMedia } from "@/actions/media";
 import { Prisma, User, Webpages, Website } from "@prisma/client";
 
 export type PageProps = {
@@ -12,5 +13,9 @@ export type WebsiteOnlyType = Website;
 export type WebsiteWithPagesType = Website & {
   webpages: Webpages[];
 };
+
+export type WebpageOnly = Webpages;
+
+export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 
 // export type UpsertWepPage = Prisma.FunnelPageCreateWithoutFunnelInput

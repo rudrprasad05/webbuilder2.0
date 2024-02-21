@@ -137,8 +137,9 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
     >
       <div
         className={clsx(
-          "use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all rounded-md",
+          "use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all",
           {
+            "pb-20": !state.editor.previewMode && !state.editor.liveMode,
             "!p-0 !mr-0":
               state.editor.previewMode === true ||
               state.editor.liveMode === true,
@@ -169,7 +170,11 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
             }
           )}
         >
-          <div className="p-6 w-full h-full bg-black/50">
+          <div
+            className={cn("p-6 w-full h-full bg-black/50", {
+              "p-0": state.editor.liveMode || state.editor.previewMode,
+            })}
+          >
             <div className="h-full overflow-scroll bg-background">
               <SortableContext
                 strategy={verticalListSortingStrategy}
@@ -184,7 +189,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
             <DragOverlay>
               {activeId ? (
                 <motion.div
-                  className="-translate-y-[20px] w-full h-8 animate-pulse flex items-center justify-center bg-background border border-dashed border-primary"
+                  className="-translate-y-[20px] h-8 w-full animate-pulse flex items-center justify-center bg-background border border-dashed border-primary"
                   drag="y"
                   dragControls={controls}
                 ></motion.div>
