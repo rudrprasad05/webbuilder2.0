@@ -47,7 +47,6 @@ export const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("first");
     setIsLoading(true);
     signIn("credentials", {
       ...data,

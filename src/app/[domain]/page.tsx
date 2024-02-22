@@ -15,7 +15,7 @@ const Page = async ({ params }: { params: { domain: string } }) => {
 
   if (!pageData) return notFound();
 
-  if (!pageData.published) return <Construction />;
+  // if (!pageData.published) return <Construction />;
 
   await prisma.webpages.update({
     where: {

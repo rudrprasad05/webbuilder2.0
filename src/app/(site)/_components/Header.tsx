@@ -11,9 +11,8 @@ const Header = () => {
         <div className="bg-background/90 w-full h-full">
           <div className="pt-32 pb-56 mx-auto text-center flex flex-col items-center max-w-3xl">
             <h1 className="text-4xl font-bold tracking-tight text-secondary-foreground sm:text-6xl">
-              All your
-              <span className="text-blue-600"> Web Solutions </span>
-              in One.
+              One Website
+              <span className="text-blue-600"> One Solution </span>
             </h1>
             <p className="mt-6 text-lg max-w-prose text-muted-foreground">
               Welcome to Webworks. Develop modern websites that elevates your

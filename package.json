@@ -57,6 +57,7 @@
     "next-auth": "^4.24.6",
     "next-themes": "^0.2.1",
     "prisma": "^5.9.1",
+    "puppeteer": "^22.1.0",
     "react": "^18",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",

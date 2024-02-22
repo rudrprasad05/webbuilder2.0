@@ -148,3 +148,18 @@ export const PublishWebpage = async (id: string, bool: boolean) => {
 
   return res;
 };
+
+export const UpdateWebsitePreviewImage = async (
+  image: string,
+  websiteId: string
+) => {
+  const res = await prisma.website.update({
+    where: {
+      id: websiteId,
+    },
+    data: {
+      previewImage: image,
+    },
+  });
+  return res;
+};

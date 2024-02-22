@@ -7,15 +7,23 @@ import { WebsiteWithPagesType } from "@/types";
 
 const SearchBar = ({ website }: { website: WebsiteWithPagesType }) => {
   return (
-    <div className="flex gap-6 py-6">
-      <div className="relative grow">
-        <Input autoComplete="off" placeholder="Search" />
-        <div className="text-muted-foreground h-full aspect-square absolute top-0 right-0 grid place-items-center ">
-          <Search />
-        </div>
+    <>
+      <div>
+        <h1 className="text-2xl">Pages</h1>
+        <h2 className="py-3 text-sm text-muted-foreground">
+          Pages in your website
+        </h2>
       </div>
-      <NewWebpage website={website} />
-    </div>
+      <div className="flex gap-3 py-6">
+        <div className="relative grow">
+          <Input autoComplete="off" placeholder="Search" />
+          <div className="text-muted-foreground h-full aspect-square absolute top-0 right-0 grid place-items-center ">
+            <Search />
+          </div>
+        </div>
+        <NewWebpage website={website} />
+      </div>
+    </>
   );
 };
 
